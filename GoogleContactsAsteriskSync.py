@@ -12,7 +12,8 @@ from classes import henxGoogleAPI
 from classes import henxSQLite
 
 # Getting the directory of this file
-directory = os.path.dirname(__file__)
+directory = os.path.dirname(os.path.abspath(__file__))
+
 # Instantiating of the sqlite and the Google API class
 sql = henxSQLite.HenxSQLiteClass(directory + "/config/config.db")
 gAPI = henxGoogleAPI.HenxGoogleAPIClass(sql)
@@ -81,17 +82,16 @@ if __name__ == "__main__":
     print("Getting Google Contacts data...")
     # Getting the raw contacts in XML format
     xml_contacts = gAPI.get_all_contacts()
-
     # XML parsing and formatting into an array
     contact_array = gAPI.make_contact_array(xml_contacts)
 
     # Formatting the numbers
-    county_code = "43"
+    county_code = "44"
     contact_array = format_numbers(contact_array, county_code)
 
     print("Starting input to asterisk....")
     # If the second argument is set the script will send the Asterrisk commands to the print console instead
     # of the system console
-    asterisk_input(contact_array, True)
+    asterisk_input(contact_array)
 
     print("Done")
