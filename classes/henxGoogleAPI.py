@@ -181,8 +181,8 @@ class HenxGoogleAPIClass:
         """ Getting all contacts
         :return: unprocessed xml string from the Google API
         """
-        url = "https://www.google.com/m8/feeds/contacts/default/thin"
-        header = {'GData - Version': '3.0'}
+        url = "https://www.google.com/m8/feeds/contacts/[your email here]/full"
+        header = {'GData-Version': '3.0'}
         payload = {"access_token": self.sql.get_parameter("access_token"),
                    "max-results": "5000"}
         r = requests.get(url, params=payload, headers=header)
@@ -211,7 +211,7 @@ class HenxGoogleAPIClass:
 
         # testinput vom file
         # tree = ET.parse("contacts_testdaten.xml")
-        parser = ET.XMLParser(encoding="utf-8")
+        parser = ET.XMLParser(encoding='utf-8')
         tree = ET.fromstring(xml_string, parser=parser)
 
         for entry in tree.findall('{http://www.w3.org/2005/Atom}entry'):
